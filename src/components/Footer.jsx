@@ -113,7 +113,7 @@ const Footer = () => {
       
       {/* Copyright */}
       <div className="text-center text-xs text-gray-500 mt-8">
-        <p>© 2025 PrideStyle. All Rights Reserved</p>
+        <p>© 2025 WearHue. All Rights Reserved</p>
         <p className="mt-1">Celebrating diversity, authenticity, and pride every day.</p>
       </div>
     </footer>
