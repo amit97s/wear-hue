@@ -154,6 +154,24 @@ const Filter = () => {
                     >
                       Price: High to Low
                     </button>
+                    <button 
+                      onClick={() => applyFilter('highToLow')}
+                      className={`w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 ${selectedFilter === 'highToLow' ? 'bg-purple-100 text-purple-800 font-medium' : ''}`}
+                    >
+                      T shirts
+                    </button>
+                    <button 
+                      onClick={() => applyFilter('highToLow')}
+                      className={`w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 ${selectedFilter === 'highToLow' ? 'bg-purple-100 text-purple-800 font-medium' : ''}`}
+                    >
+                      Accessories
+                    </button>
+                    <button 
+                      onClick={() => applyFilter('highToLow')}
+                      className={`w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 ${selectedFilter === 'highToLow' ? 'bg-purple-100 text-purple-800 font-medium' : ''}`}
+                    >
+                      Trousers
+                    </button>
                   </div>
                 </div>
                 

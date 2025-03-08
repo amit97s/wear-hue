@@ -58,7 +58,7 @@ const Hero = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-purple-900/70 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-xl font-bold text-white mb-2">Apparel</h3>
+              <h3 className="text-xl font-bold text-white mb-2">T-shirts</h3>
               <button className="text-white bg-white/20 hover:bg-white/30 transition-colors px-4 py-2 rounded-full text-sm">
                 Shop Now
               </button>
@@ -88,7 +88,7 @@ const Hero = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-xl font-bold text-white mb-2">Home Decor</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Trousers</h3>
               <button className="text-white bg-white/20 hover:bg-white/30 transition-colors px-4 py-2 rounded-full text-sm">
                 Shop Now
               </button>

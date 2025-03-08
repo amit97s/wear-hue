@@ -18,14 +18,15 @@ const Header = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Home</a>
-            <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Shop</a>
-            <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Collections</a>
+            <a href="/" className="text-gray-700 hover:text-purple-600 transition-colors">Home</a>
+            {/* <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Shop</a> */}
+            <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors ">Collections</a>
             <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">About</a>
           </div>
           
           {/* Search Bar */}
           <div className="hidden md:block flex-1 max-w-2xl mx-8">
+            <div></div>
             <div className="relative w-full">
               <input
                 type="search"
