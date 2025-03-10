@@ -5,66 +5,48 @@ import { BACKEND_URL } from "../config/config.url";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    id: null,
-    name: null,
-    email: null,
-    phone: null,
-    token: "",
-    isAuthenticated: false,
-  });
+  const [user, setUser] = useState(null); // 🟢 User is null by default
   const [loading, setLoading] = useState(true);
 
   const getAuth = async () => {
     try {
-      const token = localStorage.getItem("token"); 
-      console.log("Retrieved Token:", token); // Debugging line
+      const token = localStorage.getItem("token");
 
-    //   if (token) {
-        console.log("Making API request to:", `${BACKEND_URL}/auth`);
-        
-        const { data } = await axios.post(`${BACKEND_URL}/auth/session`, {
-          headers: { Authorization: `Bearer ${token}` },
+      if (!token) {
+        console.log("No token found in localStorage");
+        setLoading(false);
+        return;
+      }
+
+      const { data } = await axios.post(
+        `${BACKEND_URL}/auth/session`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log("Auth Response:", data);
+
+      if (data && data.user) {  // ✅ Correctly access "user"
+        setUser({
+          id: data.user._id,
+          name: data.user.name,
+          email: data.user.email,
+          phone: data.user.phone,
+          role: data.user.role,
+          token: token,
+          isAuthenticated: true,
         });
-
-        console.log("API Response:", data); // Log full response
-
-        if (data?.data?.user) {
-          console.log("User Authenticated:", data.data.user);
-          setUser({
-            id: data.data.user._id,
-            name: data.data.user.name,
-            email: data.data.user.email,
-            phone: data.data.user.phone,
-            token: token,
-            isAuthenticated: true,
-          });
-        }
-         else {
-          console.log("No user data found, clearing token...");
-          // localStorage.removeItem("token");
-          // setUser({ ...user, isAuthenticated: false });
-        }
-    //   }
-      
-      
-      
-      
-      
-      
-      
-      
-    //   else {
-        // console.log("No token found in localStorage");
-        // setUser({ ...user, isAuthenticated: false });
-    //   }
+      } else {
+        console.log("No user data found, clearing token...");
+        localStorage.removeItem("token");
+        setUser(null);
+      }
     } catch (error) {
       console.error("Authentication Error:", error);
-      // localStorage.removeItem("token");
-      // setUser({ ...user, isAuthenticated: false });
+      localStorage.removeItem("token");
+      setUser(null);
     } finally {
-      console.log("Auth check completed");
-      setLoading(false);
+      setLoading(false); // ✅ Only set loading after setting user
     }
   };
 
@@ -74,24 +56,12 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     console.log("Logging out...");
-    // localStorage.removeItem("token");
-    setUser({
-      id: null,
-      name: null,
-      email: null,
-      phone: null,
-      token: "",
-      isAuthenticated: false,
-    });
-  };
-
-  const isAuthenticated = () => {
-    console.log("User Authentication Status:", user.isAuthenticated);
-    return user.isAuthenticated;
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, logout, loading, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

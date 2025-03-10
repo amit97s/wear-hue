@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../config/config.url';
@@ -11,16 +11,22 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      // const response = await axios.post('http://localhost:5000/api/login', { email, password });
       const response = await axios.post(`${BACKEND_URL}/auth/login`,{ email, password });
       console.log('Login Success:', response.data);
       localStorage.setItem('token', response.data.data.token);
-      navigate('/dashboard'); // Redirect after successful login
+      navigate('/dashboard'); 
     } catch (err) {
       console.error('Login Error:', err);
       setError(err.response?.data?.message || 'Something went wrong');
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/'); 
+    }
+  }, []);
 
   return (
     <div className='flex items-center justify-center h-screen bg-cover bg-center' style={{ backgroundImage: "url('https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fA%3D%3D')" }}>
