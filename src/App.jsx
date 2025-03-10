@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound'
 import NextPage from './pages/NextPage'
 import FinalPage from './pages/FinalPage'
 import LoginPage from './pages/LoginPage'
+import Dashboard from './pages/Dashboard'
 import SignUpPage from './pages/SignUpPage'
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
       <Route path='/sign' element={<SignUpPage/>}/>
       <Route path='/payment' element={<FinalPage/>}/>
       <Route path='/tshirts' element={<NextPage/>}/>
+      <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='*' element={<NotFound/>}/>
      </Routes>
       </BrowserRouter>
