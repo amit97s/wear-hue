@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import { BACKEND_URL } from '../config/config.url'
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,8 @@ const SignUpPage = () => {
     setError("");
   };
 
+  const navigate = useNavigate(); // Add this line at the top with other hooks
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -32,6 +35,8 @@ const SignUpPage = () => {
     try {
       const response = await axios.post(`${BACKEND_URL}/auth/signup`, formData);
       setSuccess(response.data.message);
+      // Navigate to OTP verification page with email
+      navigate('/verify-otp', { state: { email: formData.email } });
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong. Try again.");
     } finally {

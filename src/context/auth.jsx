@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../config/config.url";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // 🟢 User is null by default
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const getAuth = async () => {
@@ -21,12 +21,17 @@ export const AuthProvider = ({ children }) => {
       const { data } = await axios.post(
         `${BACKEND_URL}/auth/session`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        { 
+          headers: { Authorization: `Bearer ${token}` },
+          validateStatus: function (status) {
+            return status < 500; // Only treat 500+ errors as axios errors
+          }
+        }
       );
 
       console.log("Auth Response:", data);
 
-      if (data && data.user) {  // ✅ Correctly access "user"
+      if (data && data.user) {
         setUser({
           id: data.user._id,
           name: data.user.name,
@@ -37,16 +42,18 @@ export const AuthProvider = ({ children }) => {
           isAuthenticated: true,
         });
       } else {
-        console.log("No user data found, clearing token...");
-        localStorage.removeItem("token");
+        console.log("No user data found");
         setUser(null);
       }
     } catch (error) {
       console.error("Authentication Error:", error);
-      localStorage.removeItem("token");
-      setUser(null);
+      // Only remove token if it's an unauthorized error (401) or token is invalid
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        localStorage.removeItem("token");
+        setUser(null);
+      }
     } finally {
-      setLoading(false); // ✅ Only set loading after setting user
+      setLoading(false);
     }
   };
 
@@ -60,8 +67,12 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const isAuthenticated = () => {
+    return user !== null && user.isAuthenticated;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, logout, loading }}>
+    <AuthContext.Provider value={{ user, logout, loading, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

@@ -31,7 +31,9 @@ import { GrOrderedList } from "react-icons/gr";
         {
           title: "Products",
           icon: Package,
+          url: "/dashboard/admin/products",
         },
+        
           {
             title: "Orders",
             icon: GrOrderedList,
