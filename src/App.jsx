@@ -1,49 +1,24 @@
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Homepage from './pages/Homepage';
-import NotFound from './pages/NotFound';
-import NextPage from './pages/NextPage';
-import FinalPage from './pages/FinalPage';
-import LoginPage from './pages/LoginPage';
-import SignUpPage from './pages/SignUpPage';
-import RoleBasedPrivateRoute from './routers/rolebased-private-route';
-import { useShow } from './hooks/useShow';
-import AdminDashboard from './pages/Dashboard';
-import ProductsPage from './pages/ProductsPage';
-import ProductForm from './pages/ProductForm';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './Home';
+import AdminDashboard from './AdminDashboard';
+import MyCourse from './MyCourse';
 
 const App = () => {
-  const show = useShow();
-
   return (
-    <div>
-      {show && <Header/>}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/sign" element={<SignUpPage />} />
-          <Route path="/payment" element={<FinalPage />} />
-          <Route path="/tshirts" element={<NextPage />} />
-          <Route path="*" element={<NotFound />} />
+    <Router>
+      <div className="p-4 bg-gray-200 flex gap-4">
+        <Link to="/" className="text-blue-600 font-semibold">Home</Link>
+        <Link to="/admin" className="text-blue-600 font-semibold">Admin Dashboard</Link>
+        <Link to="/classes" className="text-blue-600 font-semibold">Courses</Link>
+      </div>
 
-          <Route path="dashboard/user" element={<RoleBasedPrivateRoute requiredRole="user" />}>
-            <Route index element={<div>User Dashboard</div>} />
-          </Route>
-
-          <Route path="dashboard/admin" element={<RoleBasedPrivateRoute requiredRole="admin" />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="profile" element={<div>profile</div>} />
-            <Route path="products" element={<ProductsPage />} />
-            <Route path="products/add" element={<ProductForm />} />
-            <Route path="products/edit/:id" element={<ProductForm />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      <Footer/>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/classes" element={<MyCourse />} />
+      </Routes>
+    </Router>
   );
 };
 
