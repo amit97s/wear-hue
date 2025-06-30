@@ -75,7 +75,7 @@ export default function Home() {
     const password = e.target.password.value;
     try {
       // Replace with your backend login endpoint
-      const res = await axios.post("http://localhost:3000/api/students/login", {
+      const res = await axios.post("https://learnzlabcpbackend.onrender.com/api/students/login", {
         email,
         password,
       });

@@ -18,7 +18,7 @@ import {
   Trash2,
   UserPlus,
 } from "lucide-react";
-const API_URL = "http://localhost:3000/api/students";
+const API_URL = "https://learnzlabcpbackend.onrender.com/api/students";
 const AdminDashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [students, setStudents] = useState([]);
@@ -32,7 +32,25 @@ const AdminDashboard = () => {
     password: "",
     address: "",
   });
+  const [showTeacherForm, setShowTeacherForm] = useState(false);
+  const [teachers, setTeachers] = useState([]);
+  const [teacherFormData, setTeacherFormData] = useState({
+    name: "",
+    number: "",
+    email: "",
+    password: "",
+    address: "",
+    subject: "",
+  });
   const courses = [
+    "Data Analytics",
+    "Machine Learning",
+    "Data Visualisation",
+    "Data Science",
+    "Deep Learning",
+    "Python Programming",
+  ];
+  const teacherSubjects = [
     "Data Analytics",
     "Machine Learning",
     "Data Visualisation",
@@ -74,6 +92,7 @@ const AdminDashboard = () => {
         });
         setShowForm(false);
       } catch (err) {
+        console.error("Error details:", err.response ? err.response.data : err.message);
         alert("Error saving student");
       }
     } else {
@@ -560,3 +579,4 @@ const AdminDashboard = () => {
   );
 };
 export default AdminDashboard;
+
